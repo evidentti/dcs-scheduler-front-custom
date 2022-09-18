@@ -1,0 +1,61 @@
+<div #focusMonitorComponent class="custom-step">
+  <div class="custom-step-info mat-body-1">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi a tellus sed
+    enim viverra efficitur.
+  </div>
+  <div
+    class="add-button-wrapper"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+  >
+    <button
+      type="button"
+      color="accent"
+      mat-raised-button
+      [disabled]="(participants.length || 0) >= meetingParticipantsMaxCount"
+      (click)="addParticipant()"
+    >
+      <span>{{ 'add participant' | translate }}</span>
+    </button>
+    <div class="participant-counter">
+      {{ participants.length || 0 }} / {{ meetingParticipantsMaxCount }}
+    </div>
+  </div>
+  <div class="main-content" fxLayout="row" fxLayoutGap="1.5rem">
+    <section class="primary-section" fxFlex>
+      <mat-accordion #accord fxFlex [hideToggle]="false">
+        <mat-expansion-panel
+          *ngFor="let participant of participants"
+          [expanded]="participant === addedParticipant"
+          (opened)="panelOpen(participant)"
+          (closed)="panelClose(participant)"
+          (afterCollapse)="afterCollapse(participant)"
+          (afterExpand)="afterExpand(participant)"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title
+              >{{ participant.lastName }}
+              {{ participant.firstName }}</mat-panel-title
+            >
+            <mat-panel-description>
+              {{ participant.email }} &nbsp;
+              {{ formatPhoneNumber(participant.phoneNumber || '') }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-divider aria-hidden="true" [inset]="true"></mat-divider>
+          <app-participant
+            *ngIf="participant === activeParticipant"
+            [participant]="participant"
+            [isNew]="participant === addedParticipant"
+            (closeAll)="closeAll()"
+            (remove)="removeParticipant($event)"
+          ></app-participant>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </section>
+    <section class="secondary-section"></section>
+  </div>
+  <div class="loading-animation" *ngIf="showLoadingAnimation">
+    <mat-spinner [diameter]="40" [strokeWidth]="4"></mat-spinner>
+  </div>
+</div>

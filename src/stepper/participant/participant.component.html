@@ -1,0 +1,114 @@
+<form [formGroup]="form" class="participant-form" fxLayout="row">
+  <section class="participant-section">
+    <mat-form-field
+      *ngIf="isInput('participantFirstName') | async"
+      appearance="outline"
+    >
+      <mat-label>{{ 'first name' | translate }}</mat-label>
+      <input
+        #initialFocusElementRef
+        matInput
+        [required]="isRequired(firstNameCtrl)"
+        formControlName="participantFirstNameControl"
+        maxlength="45"
+      />
+      <mat-error *ngIf="!!firstNameCtrl?.hasError('required')">
+        {{ 'required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      *ngIf="isInput('participantLastName') | async"
+      appearance="outline"
+    >
+      <mat-label>{{ 'last name' | translate }}</mat-label>
+      <input
+        matInput
+        [required]="isRequired(lastNameCtrl)"
+        formControlName="participantLastNameControl"
+        maxlength="45"
+      />
+      <mat-error *ngIf="!!lastNameCtrl?.hasError('required')">
+        {{ 'required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      *ngIf="isInput('participantPersonalId') | async"
+      appearance="outline"
+    >
+      <mat-label>{{ 'ssn' | translate }}</mat-label>
+      <input
+        matInput
+        [required]="isRequired(personalIdCtrl)"
+        formControlName="participantPersonalIdControl"
+        maxlength="11"
+      />
+      <mat-error *ngIf="!!personalIdCtrl?.hasError('invalid')">
+        {{ 'invalid ssn' | translate }}
+      </mat-error>
+      <mat-error *ngIf="!!personalIdCtrl?.hasError('temporaryNotAllowed')">
+        {{ 'temporary ssn is not allowed' | translate }}
+      </mat-error>
+      <mat-error *ngIf="!!personalIdCtrl?.hasError('required')">
+        {{ 'required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      *ngIf="isInput('participantPhone') | async"
+      appearance="outline"
+    >
+      <mat-label>{{ 'phone number' | translate }}</mat-label>
+      <input
+        type="text"
+        matInput
+        [required]="isRequired(phoneCtrl)"
+        formControlName="participantPhoneControl"
+        (input)="checkInput()"
+        (blur)="formatNumber()"
+        (keydown.space)="spaceKeydown($event)"
+        (paste)="paste()"
+      />
+      <mat-error *ngIf="!!phoneCtrl?.hasError('invalid')">
+        {{ 'invalid phone' | translate }}
+        <span *ngIf="!!phoneErrorInfo?.length"
+          >({{ phoneErrorInfo | translate }})</span
+        >
+      </mat-error>
+      <mat-error *ngIf="!!phoneCtrl?.hasError('required')">
+        <span>{{ 'required' | translate }}</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      *ngIf="isInput('participantEmail') | async"
+      appearance="outline"
+    >
+      <mat-label>{{ 'email' | translate }}</mat-label>
+      <input
+        matInput
+        [required]="isRequired(emailCtrl)"
+        formControlName="participantEmailControl"
+        maxlength="150"
+      />
+      <mat-error *ngIf="!!emailCtrl?.hasError('email')">
+        {{ 'invalid email' | translate }}
+      </mat-error>
+      <mat-error *ngIf="!!emailCtrl?.hasError('required')">
+        {{ 'required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <div fxlayout="row" fxLayoutAlign="end start" fxLayoutGap="0.5rem">
+      <button type="button" color="primary" mat-raised-button (click)="save()">
+        <span *ngIf="isNew">{{ 'add' | translate }}</span>
+        <span *ngIf="!isNew && changed">{{ 'update' | translate }}</span>
+        <span *ngIf="!isNew && !changed">{{ 'close' | translate }}</span>
+      </button>
+      <button
+        type="button"
+        color="accent"
+        mat-raised-button
+        (click)="removeParticipant(participant)"
+      >
+        <span>{{ 'remove' | translate }}</span>
+      </button>
+    </div>
+  </section>
+</form>

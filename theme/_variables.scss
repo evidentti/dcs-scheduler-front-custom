@@ -1,0 +1,818 @@
+@use "@angular/material" as mat;
+
+// FONT SECTOR START
+$custom-typography: mat.define-typography-config(
+  $font-family: '"Riona Sans", Arial',
+);
+@include mat.core($custom-typography);
+// FONT SECTOR END
+
+// COLOR SECTOR START
+$primary-color: #063954;
+$accent-color: #063954;
+$warn-color: rgb(204, 51, 0);
+$extra-color: #e0ded8;
+$extra-color2: #62b3e5;
+
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.87);
+$dark-accent-text: rgba(black, 0.87);
+$dark-warn-text: rgba(black, 0.87);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+$light-primary-text: white;
+$light-accent-text: white;
+$light-warn-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba(white, 0.12);
+$light-focused: rgba(white, 0.12);
+$outline-color: #063954; // rgba(blue, 0.87);
+$custom-checkbox-color: rgba(black, 0.54);
+$disabled-color: #767676;
+
+$custom-primary: (
+  50: lighten($primary-color, 80%),
+  100: lighten($primary-color, 60%),
+  200: lighten($primary-color, 45%),
+  300: lighten($primary-color, 30%),
+  400: lighten($primary-color, 15%),
+  500: $primary-color,
+  600: darken($primary-color, 15%),
+  700: darken($primary-color, 30%),
+  800: darken($primary-color, 45%),
+  900: darken($primary-color, 60%),
+  a100: lighten($primary-color, 55%),
+  a200: lighten($primary-color, 40%),
+  a400: lighten($primary-color, 10%),
+  a700: darken($primary-color, 40%),
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    a100: $dark-primary-text,
+    a200: $dark-primary-text,
+    a400: $light-primary-text,
+    a700: $light-primary-text,
+  ),
+);
+
+$custom-accent: (
+  50: lighten($accent-color, 75%),
+  100: lighten($accent-color, 60%),
+  200: lighten($accent-color, 45%),
+  300: lighten($accent-color, 30%),
+  400: lighten($accent-color, 15%),
+  500: $accent-color,
+  600: darken($accent-color, 15%),
+  700: darken($accent-color, 30%),
+  800: darken($accent-color, 45%),
+  900: darken($accent-color, 60%),
+  a100: lighten($accent-color, 55%),
+  a200: lighten($accent-color, 40%),
+  a400: lighten($accent-color, 10%),
+  a700: darken($accent-color, 40%),
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    a100: $dark-primary-text,
+    a200: $dark-primary-text,
+    a400: $dark-primary-text,
+    a700: $dark-primary-text,
+  ),
+);
+
+$custom-warn: (
+  50: lighten($warn-color, 80%),
+  100: lighten($warn-color, 60%),
+  200: lighten($warn-color, 45%),
+  300: lighten($warn-color, 30%),
+  400: lighten($warn-color, 15%),
+  500: $warn-color,
+  600: darken($warn-color, 15%),
+  700: darken($warn-color, 30%),
+  800: darken($warn-color, 45%),
+  900: darken($warn-color, 60%),
+  a100: lighten($warn-color, 55%),
+  a200: lighten($warn-color, 40%),
+  a400: lighten($warn-color, 10%),
+  a700: darken($warn-color, 40%),
+  contrast: (
+    50: $dark-warn-text,
+    100: $dark-warn-text,
+    200: $dark-warn-text,
+    300: $dark-warn-text,
+    400: $light-warn-text,
+    500: $light-warn-text,
+    600: $light-warn-text,
+    700: $light-warn-text,
+    800: $light-warn-text,
+    900: $light-warn-text,
+    a100: $dark-warn-text,
+    a200: $dark-warn-text,
+    a400: $light-warn-text,
+    a700: $light-warn-text,
+  ),
+);
+
+$app-primary: mat.define-palette($custom-primary);
+$app-accent: mat.define-palette($custom-accent);
+// $app-accent: mat.define-palette($custom-accent, a200, a100, a400);
+$app-warn: mat.define-palette($custom-warn);
+
+$app-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
+
+@include mat.all-component-themes($app-theme);
+// COLOR SECTOR END
+
+.mat-drawer {
+  background-color: mat.get-color-from-palette(
+    $custom-primary,
+    50
+  ); // transparent;
+}
+
+.mat-drawer-container {
+  background-color: mat.get-color-from-palette(
+    $custom-primary,
+    50
+  ); // transparent;
+}
+
+.mat-drawer-content {
+  background-color: transparent;
+}
+
+.mat-toolbar {
+  &.toolbar {
+    background-color: mat.get-color-from-palette($custom-primary, 500);
+    color: mat.get-contrast-color-from-palette($custom-primary, 500);
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+      0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  }
+}
+
+.mat-icon.logo {
+  height: 65px;
+  width: auto;
+  max-width: 170px;
+  margin-left: 0.5rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// BUTTON SECTOR START
+.mat-button {
+  &.mat-primary {
+    border-width: 2px;
+    border-style: solid;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border-color: mat.get-contrast-color-from-palette($custom-primary, 500);
+    &:hover {
+      border-color: mat.get-color-from-palette($custom-primary, 500);
+    }
+    &:disabled {
+      border-color: mat.get-contrast-color-from-palette($custom-primary, 500);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+  &.mat-accent {
+    border-width: 2px;
+    border-style: solid;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border-color: mat.get-contrast-color-from-palette($custom-accent, 500);
+    &:hover {
+      border-color: mat.get-color-from-palette($custom-accent, 500);
+    }
+    &:disabled {
+      border-color: mat.get-contrast-color-from-palette($custom-accent, 500);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+  &.mat-warn {
+    border-width: 2px;
+    border-style: solid;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border-color: mat.get-contrast-color-from-palette($custom-warn, 500);
+    &:hover {
+      border-color: mat.get-color-from-palette($custom-warn, 500);
+    }
+    &:disabled {
+      border-color: mat.get-contrast-color-from-palette($custom-warn, 500);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+  &.cdk-keyboard-focused {
+    outline-width: 2px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: 2px;
+  }
+}
+
+// RAISED BUTTON SECTOR
+.mat-raised-button {
+  &.mat-primary {
+    border-width: 2px;
+    border-style: solid;
+    // border-radius: 20px;
+    box-shadow: none;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: mat.get-contrast-color-from-palette($custom-primary, 500);
+    background-color: mat.get-color-from-palette($custom-primary, 500);
+    border-color: mat.get-color-from-palette($custom-primary, 500);
+    &:hover {
+      outline-width: 2px;
+      outline-style: auto;
+      outline-color: $outline-color;
+      outline-offset: 4px;
+    }
+    &:disabled {
+      color: mat.get-contrast-color-from-palette($custom-primary, 500);
+      background-color: mat.get-color-from-palette($custom-primary, 500);
+      border-color: mat.get-contrast-color-from-palette($custom-primary, 500);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    &:focus:not(.cdk-keyboard-focused) {
+      box-shadow: none; // 0 0 8px 0 $primary-color;
+    }
+  }
+  &.mat-accent {
+    border-width: 2px;
+    border-style: solid;
+    // border-radius: 20px;
+    box-shadow: none;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: mat.get-color-from-palette($custom-accent, 500);
+    background-color: mat.get-contrast-color-from-palette($custom-accent, 500);
+    &:hover {
+      outline-width: 2px;
+      outline-style: auto;
+      outline-color: $outline-color;
+      outline-offset: 4px;
+    }
+    &:disabled {
+      color: mat.get-contrast-color-from-palette($custom-accent, 500);
+      background-color: mat.get-color-from-palette($custom-accent, 500);
+      border-color: mat.get-contrast-color-from-palette($custom-accent, 500);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    &.small-size {
+      min-width: 90px;
+    }
+    &.medium-size {
+      min-width: 120px;
+    }
+    &:focus:not(.cdk-keyboard-focused) {
+      box-shadow: none; // 0 0 8px 0 $accent-color;
+    }
+  }
+  &.mat-warn {
+    border-width: 2px;
+    border-style: solid;
+    // border-radius: 20px;
+    box-shadow: none;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: mat.get-contrast-color-from-palette($custom-warn, 500);
+    background-color: mat.get-color-from-palette($custom-warn, 500);
+    border-color: mat.get-color-from-palette($custom-warn, 500);
+    &:hover {
+      outline-width: 2px;
+      outline-style: auto;
+      outline-color: $outline-color;
+      outline-offset: 4px;
+    }
+    &:disabled {
+      color: mat.get-contrast-color-from-palette($custom-warn, 500);
+      background-color: mat.get-color-from-palette($custom-warn, 500);
+      border-color: mat.get-contrast-color-from-palette($custom-warn, 500);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    &:focus:not(.cdk-keyboard-focused) {
+      box-shadow: none; // 0 0 8px 0 $primary-color;
+    }
+  }
+  &.cdk-keyboard-focused {
+    outline-width: 2px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: 4px;
+  }
+}
+
+.mat-button-toggle-checked {
+  background-color: mat.get-color-from-palette($custom-primary, 500);
+  color: mat.get-contrast-color-from-palette($custom-primary, 500);
+}
+
+.mat-icon-button.small {
+  height: 32px;
+  width: 32px;
+  line-height: unset;
+}
+
+.mat-icon-button.cdk-keyboard-focused {
+  outline-width: 2px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: none;
+}
+
+body.main-body.cdk-keyboard-focused {
+  .cdk-overlay-container {
+    .mat-menu-item {
+      &.cdk-keyboard-focused {
+        outline-width: 1px;
+        outline-style: auto;
+        outline-color: $outline-color;
+        outline-offset: -1px;
+      }
+    }
+    .mat-option {
+      &.mat-active {
+        outline-width: 1px;
+        outline-style: auto;
+        outline-color: $outline-color;
+        outline-offset: -1px;
+      }
+    }
+  }
+}
+
+body.main-body.cdk-program-focused {
+  .cdk-overlay-container {
+    .mat-option {
+      &.mat-active {
+        outline-width: 1px;
+        outline-style: auto;
+        outline-color: $outline-color;
+        outline-offset: -1px;
+      }
+    }
+  }
+}
+
+body.main-body {
+  .overlay-keyboard-focus {
+    .mat-menu-item {
+      outline-width: 1px;
+      outline-style: auto;
+      outline-color: $outline-color;
+      outline-offset: -10px;
+    }
+  }
+}
+
+mat-form-field.mat-form-field:not(.mat-form-field-invalid).mat-focused:hover {
+  .mat-form-field-outline {
+    outline-width: 2px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: 3px;
+  }
+}
+
+mat-form-field.mat-form-field-invalid.mat-focused {
+  .mat-form-field-outline {
+    outline-width: 2px;
+    outline-style: auto;
+    outline-color: $warn-color;
+    outline-offset: 3px;
+  }
+}
+
+mat-form-field.mat-form-field-invalid:hover {
+  .mat-form-field-outline {
+    outline-width: 2px;
+    outline-style: auto;
+    outline-color: $warn-color;
+    outline-offset: 3px;
+  }
+}
+
+.mat-step-header.cdk-keyboard-focused {
+  outline-width: 2px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: none;
+}
+
+body.main-body.cdk-keyboard-focused {
+  .mat-form-field:not(.mat-form-field-appearance-outline).mat-focused {
+    .mat-select {
+      outline-width: 1px;
+      outline-style: auto;
+      outline-color: $outline-color;
+      outline-offset: 4px;
+    }
+    .mat-input-element {
+      outline-width: 1px;
+      outline-style: auto;
+      outline-color: $outline-color;
+      outline-offset: 4px;
+    }
+  }
+  .mat-action-list .mat-list-item:focus-visible {
+    outline-width: 1px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: -1px;
+  }
+}
+
+.mat-icon-button.mat-primary.mat-button-disabled:not(.custom-disabled) {
+  color: mat.get-color-from-palette($custom-primary, 400);
+  border-color: mat.get-color-from-palette($custom-primary, 400);
+}
+
+.mat-icon-button.mat-primary.mat-button-disabled.custom-disabled {
+  color: $custom-checkbox-color;
+  border-color: $custom-checkbox-color;
+}
+
+.mat-icon-button.mat-button-disabled {
+  opacity: 0.4;
+}
+
+.mat-radio-button.cdk-keyboard-focused {
+  outline-width: 1px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 5px;
+}
+// BUTTON SECTOR END
+
+.mat-calendar-body-cell-content {
+  color: $dark-primary-text;
+}
+
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled)
+  > .mat-calendar-body-cell-content {
+  font-weight: bolder;
+}
+
+.mat-calendar-body-active.mat-calendar-body-disabled
+  > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+  color: $dark-primary-text;
+  font-weight: normal;
+}
+
+.mat-calendar-body-disabled
+  > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  color: $disabled-color;
+  font-style: italic;
+}
+
+body.main-body.cdk-keyboard-focused
+  .mat-calendar-body-active
+  > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  color: mat.get-color-from-palette($custom-primary, 500);
+  background-color: transparent;
+  outline-width: 2px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: none;
+}
+
+body.main-body.cdk-keyboard-focused
+  > .mat-calendar-body-cell-content.mat-calendar-body-selected {
+  color: $light-primary-text;
+}
+
+body.main-body.cdk-keyboard-focused
+  .mat-calendar-body-active
+  > .mat-calendar-body-cell-content.mat-calendar-body-selected {
+  color: $light-primary-text;
+  outline-width: 2px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 4px;
+}
+
+body.main-body.cdk-keyboard-focused .mat-calendar-content.cdk-keyboard-focused {
+  .mat-calendar-body-active
+    > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+    color: mat.get-color-from-palette($custom-primary, 500);
+    background-color: transparent;
+    outline-width: 2px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: 4px;
+  }
+}
+
+body.main-body.cdk-keyboard-focused .mat-calendar-content.cdk-keyboard-focused {
+  .mat-calendar-body-active
+    > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical).mat-calendar-body-today {
+    color: mat.get-color-from-palette($custom-primary, 500);
+    background-color: transparent;
+    outline-width: 2px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: 4px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $outline-color;
+  }
+}
+
+body.main-body.cdk-keyboard-focused
+  .mat-calendar-content.cdk-keyboard-focused
+  .mat-calendar-body-active
+  > .mat-calendar-body-cell-content.mat-calendar-body-selected {
+  color: $light-primary-text;
+  outline-width: 2px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 6px;
+}
+
+body.main-body.cdk-keyboard-focused
+  .mat-calendar-period-button.cdk-keyboard-focused {
+  outline-width: 2px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 1px;
+}
+
+.mat-calendar-body-selected {
+  color: $light-primary-text;
+}
+
+.mat-selected:not(.mat-option-multiple) {
+  background: $light-primary-text;
+  &:hover {
+    font-weight: bolder;
+    font-style: italic;
+  }
+  &.mat-active {
+    font-weight: bolder;
+  }
+}
+
+.mat-option:not(.custom-keyboard-focused) {
+  &:hover {
+    font-weight: bolder;
+  }
+  &.mat-active {
+    font-weight: bolder;
+  }
+}
+
+.mat-option.custom-keyboard-focused {
+  &:hover {
+    font-weight: bolder;
+  }
+  &.mat-active {
+    outline-width: 1px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: -10px;
+  }
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-disabled
+  .mat-form-field-underline {
+  background-image: none;
+  background-color: rgba(0, 0, 0, 0.42) !important;
+}
+
+.mat-form-field.date-form-field {
+  min-width: 230px;
+}
+
+.mat-input-element:disabled {
+  color: $dark-primary-text;
+}
+
+.mat-input-element.custom-keyboard-focused {
+  outline-width: 1px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 5px;
+}
+
+.mat-input-element.cdk-keyboard-focused {
+  outline-width: 1px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 5px;
+}
+
+mat-checkbox.mat-checkbox.cdk-keyboard-focused {
+  outline-width: 1px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 4px;
+}
+
+mat-checkbox.mat-checkbox:hover {
+  outline-width: 1px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 4px;
+}
+
+mat-checkbox.mat-checkbox.cdk-keyboard-focused:hover {
+  outline-width: 1px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: 5px;
+}
+
+mat-checkbox.mat-checkbox.error.cdk-keyboard-focused {
+  outline-color: $warn-color;
+}
+
+mat-expansion-panel-header.mat-expansion-panel-header.cdk-keyboard-focused {
+  outline-width: 1px;
+  outline-style: auto;
+  outline-color: $outline-color;
+  outline-offset: -1px;
+}
+
+.custom-title {
+  padding: 0 0.3rem;
+  outline-offset: 2px;
+}
+
+.custom-header-title {
+  margin: 0 1rem;
+}
+
+.header-spinner {
+  margin: 0 2rem;
+}
+
+.header-spinner circle {
+  stroke: white;
+}
+
+.search-input {
+  min-width: 200px;
+}
+
+// .mat-list-item.custom-keyboard-focused {
+//   mat-label {
+//     outline-width: 1px;
+//     outline-style: auto;
+//     outline-color: $outline-color;
+//     outline-offset: 5px;
+//   }
+// }
+
+// .mat-select.custom-keyboard-focused {
+//   outline-width: 1px;
+//   outline-style: auto;
+//   outline-color: $outline-color;
+//   outline-offset: 4px;
+// }
+
+.mat-card {
+  outline: none;
+}
+
+// .mat-card.custom-keyboard-focused {
+//   outline-width: 1px;
+//   outline-style: auto;
+//   outline-color: $outline-color;
+//   outline-offset: -2px;
+// }
+
+// .mat-paginator.custom-keyboard-focused {
+//   .mat-form-field.mat-focused {
+//     .mat-select {
+//       outline-width: 1px;
+//       outline-style: auto;
+//       outline-color: $outline-color;
+//       outline-offset: 2px;
+//     }
+//   }
+// }
+
+.mat-sort-header.cdk-keyboard-focused {
+  .mat-sort-header-container {
+    outline-width: 1px;
+    outline-style: auto;
+    outline-color: $outline-color;
+    outline-offset: 5px;
+    .mat-sort-header-arrow {
+      transform: translateY(0) !important;
+    }
+  }
+}
+
+.custom-vertical-divider {
+  background-color: $light-primary-text;
+  height: 1rem;
+  width: 1px;
+  margin-right: 0.5rem;
+}
+
+.failure {
+  color: mat.get-color-from-palette($custom-warn, 500);
+  font-style: italic;
+}
+
+.success-snackbar {
+  background: #5ab036;
+  color: white;
+  text-align: center;
+}
+
+.error-snackbar {
+  background: mat.get-color-from-palette($custom-warn, 600);
+  color: mat.get-contrast-color-from-palette($custom-warn, 600);
+  text-align: center;
+}
+
+.accent-light-background {
+  color: mat.get-contrast-color-from-palette($custom-accent, 50);
+  background-color: mat.get-color-from-palette($custom-accent, 50);
+}
+
+.accent-background {
+  background-color: mat.get-color-from-palette($custom-accent, 100);
+}
+
+.accent-dark-border {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: mat.get-color-from-palette($custom-accent, 700);
+}
+
+.active {
+  background-color: mat.get-color-from-palette($custom-accent, 50);
+}
+
+.mat-selection-list {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.mat-list-option {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.mat-list-option:not(:focus) {
+  border-width: 2px;
+  border-style: solid;
+  border-color: mat.get-color-from-palette($custom-primary, 100);
+  border-radius: 5px;
+}
+
+.mat-list-option:focus {
+  border-width: 2px;
+  border-style: solid;
+  border-color: $outline-color;
+  border-radius: 5px;
+}
+
+.custom-card {
+  height: calc(100vh - 64px);
+  overflow: auto;
+  flex-direction: column;
+  &.non-smartphone {
+    overflow: hidden;
+  }
+}
+
+.mat-date-range-input-inner[disabled] {
+  color: $dark-primary-text;
+}
+
+@media only screen and (max-width: 600px) {
+  .custom-card {
+    height: calc(100vh - 56px);
+  }
+}

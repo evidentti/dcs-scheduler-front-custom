@@ -1,0 +1,117 @@
+<div #focusMonitorComponent class="custom-step">
+  <div class="custom-step-info mat-body-1">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi a tellus sed
+    enim viverra efficitur.
+  </div>
+  <div class="main-content" fxLayout="row" fxLayoutGap="1.5rem">
+    <section class="primary-section">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1rem">
+        <div
+          class="custom-table-info"
+          fxLayout="column"
+          fxLayout.xs="row"
+          fxLayoutGap="0.5rem"
+          fxLayoutGap.xs="1.0rem"
+        >
+          <div fxLayout="row" fxLayoutAlign="center">
+            <img
+              class="image-url"
+              ngClass.lt-sm="smartphone"
+              [src]="slot.agentPhotoURL || defaultImage"
+              [alt]="'agent photo' | translate"
+            />
+          </div>
+          <div class="custom-agent-info">
+            <div>{{ slot.agentName }}</div>
+            <div>{{ slot.agentJobTitle }}</div>
+          </div>
+        </div>
+        <div fxLayout="column" class="custom-table-meeting">
+          <div class="custom-time" fxLayout="row" fxLayoutAlign="start center">
+            <span class="cdk-visually-hidden"
+              >{{ 'meeting time at' | translate }}&nbsp;</span
+            >{{ slot.timeFrom || '' | longDateFormatter: language }}
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon
+              class="custom-icon"
+              svgIcon="access_time_black"
+            ></mat-icon>
+            <div class="custom-text">
+              <span class="cdk-visually-hidden"
+                >{{ 'duration of the meeting is' | translate }}&nbsp;</span
+              >{{ slot.timeFrom || '' | durationPipe: slot.timeTo || '' }}
+              {{ 'minutes' | translate }}
+            </div>
+          </div>
+          <div
+            *ngIf="!slot.isVideoChannel && !slot.isRequiresOffice"
+            class="custom-text"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <mat-icon class="custom-icon" svgIcon="phone"></mat-icon>
+            <span>{{ slot.channelName }}</span>
+          </div>
+          <div
+            *ngIf="!slot.isVideoChannel && slot.isRequiresOffice"
+            class="custom-text"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <mat-icon
+              class="custom-icon"
+              svgIcon="meeting_room_black"
+            ></mat-icon>
+            <span>{{ slot.channelName }}</span>
+          </div>
+          <div
+            *ngIf="slot.isVideoChannel"
+            fxLayout="row"
+            class="custom-text"
+            fxLayoutAlign="start center"
+          >
+            <mat-icon class="custom-icon" svgIcon="wifi_black"></mat-icon>
+            <span>{{ slot.channelName }}</span>
+          </div>
+          <div
+            class="custom-first-text"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            {{ slot.topicName }}
+          </div>
+          <div>{{ slot.officeName }}</div>
+          <div>{{ slot.officeAddress }} {{ slot.officeCity }}</div>
+          <div class="customer-info">{{ 'customer' | translate }}</div>
+          <div class="custom-text">
+            {{ contact.firstName }} {{ contact.lastName }}
+          </div>
+          <div>{{ contact.phone }}</div>
+          <div>{{ contact.email }}</div>
+          <div *ngIf="contact.participants?.length" class="customer-info">
+            {{ 'participants' | translate }}
+          </div>
+          <div
+            class="participant-list"
+            *ngFor="let participant of contact.participants"
+          >
+            <div class="custom-text">
+              {{ participant?.firstName }} {{ participant?.lastName }}
+            </div>
+            <div *ngIf="participant?.phoneNumber">
+              {{ participant?.phoneNumber }}
+            </div>
+            <div *ngIf="participant?.email">{{ participant?.email }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="secondary-section">
+      <div class="secondary-content"></div>
+    </section>
+  </div>
+  <div class="loading-animation" *ngIf="showLoadingAnimation">
+    <mat-spinner [diameter]="40" [strokeWidth]="4"></mat-spinner>
+  </div>
+</div>

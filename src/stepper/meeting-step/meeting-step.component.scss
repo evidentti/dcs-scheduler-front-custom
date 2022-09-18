@@ -1,0 +1,207 @@
+@import "colors";
+
+.custom-step {
+  // max-width: 593px;
+  padding-top: 0.5rem;
+}
+
+.main-content {
+  &.hidden {
+    visibility: hidden;
+    height: 0;
+  }
+}
+
+.primary-calendar-section {
+  margin-bottom: 1.5rem;
+  min-width: 400px;
+}
+
+.secondary-calendar-section {
+  width: 100%;
+  padding: 1.5rem 0 2rem 0;
+}
+
+.secondary-content {
+  width: 100%;
+  height: 100%;
+  border-color: $extra-color;
+  border-width: 0 0 0 1px;
+  // border-width: 0 1px 0 1px;
+  border-style: solid;
+}
+
+.primary-table-section {
+  width: 100%;
+  min-width: 680px;
+  margin-bottom: 0.5rem;
+  overflow: auto;
+  padding-top: 0.5rem;
+}
+
+.secondary-table-section {
+  width: 100%;
+  padding: 0 0 0.5rem 0;
+}
+
+.custom-table {
+  .mat-header-cell.mat-column-date,
+  .mat-header-cell.mat-column-time,
+  .mat-header-cell.mat-column-topic,
+  .mat-header-cell.mat-column-office,
+  .mat-header-cell.mat-column-agent,
+  .mat-header-cell.mat-column-channel,
+  .mat-header-cell.mat-column-language,
+  .mat-header-cell.mat-column-buttons {
+    font-weight: bold;
+  }
+  padding: 1px;
+  border-color: transparent;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+  &.error {
+    border-color: $warn-color;
+  }
+}
+
+.custom-table-meeting {
+  min-width: 150px;
+  width: 100%;
+}
+
+.custom-table-info {
+  min-width: 150px;
+}
+
+.mat-cell {
+  color: $primary-font-color;
+}
+
+.mat-header-cell {
+  color: $secondary-font-color;
+  &.table-header-row {
+    text-align: center;
+  }
+  &.no-border {
+    border: none;
+  }
+  .header {
+    padding-top: 1rem;
+  }
+}
+
+.mat-column-availability {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  text-align: left;
+  &.header {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.custom-table-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.mat-raised-button {
+  width: 100%;
+  max-width: 200px;
+}
+
+.custom-time {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.custom-first-text {
+  margin-top: 0.4rem;
+  margin-bottom: 0.2rem;
+}
+
+.custom-text {
+  margin-top: 0.1rem;
+  margin-bottom: 0.2rem;
+  text-align: left;
+}
+
+.custom-icon {
+  margin-right: 0.3rem;
+}
+
+.custom-button-row {
+  margin-top: 0;
+  width: 100%;
+}
+
+.custom-agent-info {
+  text-align: center;
+}
+
+.image-url {
+  margin-bottom: 0.4rem;
+}
+
+.step-error {
+  font-size: 75%;
+  // margin-top: 8px;
+  padding: 0.5em 1em 0 1em;
+}
+
+.communication-extra {
+  overflow: hidden;
+  height: 1.34375em;
+}
+
+@media only screen and (max-width: 960px) {
+}
+
+@media only screen and (max-width: 768px) {
+  .primary-table-section {
+    min-width: auto;
+  }
+
+  .secondary-table-section {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .custom-button-row {
+    margin-top: 0.3rem;
+  }
+
+  .mat-raised-button {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .custom-table-meeting {
+    min-width: 150px;
+    width: 100%;
+  }
+
+  .custom-table-info {
+    min-width: auto;
+    min-width: 150px;
+  }
+
+  .custom-agent-info {
+    text-align: left;
+  }
+
+  .custom-time {
+    margin-bottom: 0.7rem;
+  }
+  .primary-calendar-section {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .secondary-calendar-section {
+    display: none;
+  }
+}

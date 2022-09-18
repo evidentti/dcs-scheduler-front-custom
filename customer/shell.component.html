@@ -1,0 +1,22 @@
+<mat-sidenav-container [ngClass]="{ 'limited-min-size': !isCustomer }">
+  <mat-sidenav></mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar" fxLayout="column">
+      <mat-toolbar-row class="toolbar-content">
+        <mat-icon
+          class="logo"
+          svgIcon="{{ logo }}"
+          (click)="goHome(sidenav)"
+        ></mat-icon>
+        <div fxFlex></div>
+        <mat-spinner
+          *ngIf="httpRequestIsActive"
+          [strokeWidth]="2"
+          [diameter]="20"
+          class="header-spinner"
+        ></mat-spinner>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

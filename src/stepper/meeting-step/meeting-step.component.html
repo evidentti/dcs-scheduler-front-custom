@@ -1,0 +1,187 @@
+<div #focusMonitorComponent class="custom-step">
+  <div class="mat-body-1">
+    Duis aliquet, odio vel euismod interdum, metus dolor pulvinar tortor,
+    consequat rhoncus libero tellus id.
+  </div>
+  <div class="main-content" fxLayout="row" fxLayoutGap="1.5rem">
+    <section
+      class="primary-calendar-section"
+      ngClass.lt-sm="smartphone"
+      ngClass.lt-md="mobile"
+    >
+      <mat-calendar
+        [selected]="calendarDateValue"
+        [minDate]="minDateValue"
+        [maxDate]="maxDateValue"
+        [dateFilter]="momentFilter"
+        (selectedChange)="dateChanged($event)"
+      ></mat-calendar>
+    </section>
+    <section class="secondary-calendar-section">
+      <div class="secondary-content"></div>
+    </section>
+  </div>
+  <div class="main-content" fxLayout="row" fxLayoutGap="1.5rem">
+    <section class="primary-table-section">
+      <mat-divider [inset]="true"></mat-divider>
+      <table
+        mat-table
+        class="custom-table"
+        [ngClass]="{ error: !!slotCtrl?.hasError('required') }"
+        #schedulertable
+        [dataSource]="dataSource"
+      >
+        <ng-container matColumnDef="availability">
+          <th mat-header-cell *matHeaderCellDef class="header">
+            <div class="custom-table-title">{{ dateText | translate }}</div>
+          </th>
+          <td
+            mat-cell
+            *matCellDef="
+              let row;
+              let i = index;
+              let isFirstRow = first;
+              let isLastRow = last
+            "
+            ngClass.lt-sm="smartphone"
+            ngClass.lt-md="mobile"
+          >
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1rem">
+              <div
+                class="custom-table-info"
+                fxLayout="column"
+                fxLayout.xs="row"
+                fxLayoutGap="0.5rem"
+                fxLayoutGap.xs="1.0rem"
+              >
+                <div fxLayout="row" fxLayoutAlign="center">
+                  <img
+                    class="image-url"
+                    ngClass.lt-sm="smartphone"
+                    [src]="row.agentPhotoURL || defaultImage"
+                    [alt]="'agent photo' | translate"
+                  />
+                </div>
+                <div class="custom-agent-info">
+                  <div>{{ row.agentName }}</div>
+                  <div>{{ row.agentJobTitle }}</div>
+                  <div class="custom-first-text">
+                    {{ 'serving languages' | translate }}
+                  </div>
+                  <div>{{ languageText(row?.languages) }}</div>
+                </div>
+              </div>
+              <div fxLayout="column" class="custom-table-meeting">
+                <div
+                  class="custom-time"
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                >
+                  <span class="cdk-visually-hidden"
+                    >{{ 'meeting time at' | translate }}&nbsp;</span
+                  >{{ row.timeFrom | localeTimeFormatter }}
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon
+                    class="custom-icon"
+                    svgIcon="access_time_black"
+                  ></mat-icon>
+                  <div class="custom-text">
+                    <span class="cdk-visually-hidden"
+                      >{{
+                        'duration of the meeting is' | translate
+                      }}&nbsp;</span
+                    >{{ row.timeFrom | durationPipe: row.timeTo }}
+                    {{ 'minutes' | translate }}
+                  </div>
+                </div>
+                <div
+                  *ngIf="!row.isVideoChannel && !row.isRequiresOffice"
+                  class="custom-text"
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                >
+                  <mat-icon class="custom-icon" svgIcon="phone"></mat-icon>
+                  <span>{{ row.channelName }}</span>
+                </div>
+                <div
+                  *ngIf="!row.isVideoChannel && row.isRequiresOffice"
+                  class="custom-text"
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                >
+                  <mat-icon
+                    class="custom-icon"
+                    svgIcon="meeting_room_black"
+                  ></mat-icon>
+                  <span>{{ row.channelName }}</span>
+                </div>
+                <div
+                  *ngIf="row.isVideoChannel"
+                  fxLayout="row"
+                  class="custom-text"
+                  fxLayoutAlign="start center"
+                >
+                  <mat-icon class="custom-icon" svgIcon="wifi_black"></mat-icon>
+                  <span>{{ row.channelName }}</span>
+                </div>
+                <div class="custom-first-text">{{ row.topicName }}</div>
+                <div>{{ row.officeName }}</div>
+                <div>
+                  {{ row.officeAddress }} {{ row.officeZip }}
+                  {{ row.officeCity }}
+                </div>
+              </div>
+              <div
+                class="custom-button-row"
+                fxlayout="row"
+                fxLayoutAlign="end start"
+              >
+                <button
+                  type="button"
+                  color="primary"
+                  class="small-size"
+                  mat-raised-button
+                  [disabled]="showLoadingAnimation"
+                  id="{{ 'table-item-' + i }}"
+                  (click)="slotSelected(row); $event.stopPropagation()"
+                >
+                  <span>{{ 'book' | translate }}</span>
+                </button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="schedulerColumns; sticky: true"
+        ></tr>
+        <tr
+          mat-row
+          [ngClass]="{ active: row === activeData }"
+          *matRowDef="let row; columns: schedulerColumns"
+        ></tr>
+      </table>
+      <div class="communication-extra">
+        <mat-error
+          class="step-error"
+          [@stepErrorAnimation]
+          *ngIf="!!slotCtrl?.hasError('required')"
+        >
+          {{ 'required' | translate }}
+        </mat-error>
+      </div>
+      <mat-paginator
+        class="selector-hidden"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChangeEvent()"
+      ></mat-paginator>
+    </section>
+    <section class="secondary-table-section">
+      <div class="secondary-content"></div>
+    </section>
+  </div>
+  <div class="loading-animation" *ngIf="showLoadingAnimation">
+    <mat-spinner [diameter]="40" [strokeWidth]="4"></mat-spinner>
+  </div>
+</div>

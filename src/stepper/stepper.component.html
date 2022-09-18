@@ -1,0 +1,235 @@
+<mat-card #focusMonitorComponent class="custom-card">
+  <div
+    class="custom-stepper container"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+  >
+    <h1 class="stepper-header">{{ 'scheduler' | translate }}</h1>
+    <section
+      class="custom-language"
+      *ngIf="(languages?.length || 0) > 1"
+      fxLayout="row"
+      fxLayoutAlign="end center"
+    >
+      <button
+        mat-raised-button
+        color="accent"
+        [matMenuTriggerFor]="languageMenu"
+        attr.aria-label="{{ 'language selector' | translate }}. {{
+          language | langFormatter | translate
+        }}"
+      >
+        <span class="language">{{ language | langFormatter | translate }}</span>
+      </button>
+      <mat-menu #languageMenu="matMenu">
+        <button
+          mat-menu-item
+          attr.aria-label="{{ language | langFormatter | translate }}"
+          *ngFor="let language of languages | langSorter: language"
+          (click)="setLanguage(language)"
+        >
+          {{ language | langFormatter | translate }}
+        </button>
+      </mat-menu>
+    </section>
+  </div>
+  <div class="custom-stepper stepper-text mat-body-1">
+    Mauris fringilla eu nibh et semper. Quisque consectetur consectetur ante, at
+    consectetur mi. Pellentesque habitant morbi tristique senectus et netus.
+  </div>
+  <section #stepperSection>
+    <mat-stepper
+      class="custom-stepper mat-elevation-z2"
+      orientation="vertical"
+      [linear]="isLinear"
+      #stepper
+      (selectionChange)="stepChanged($event)"
+      (animationDone)="animationDone()"
+    >
+      <ng-template matStepperIcon="edit">
+        <mat-icon svgIcon="edit"></mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="done">
+        <mat-icon svgIcon="done_white"></mat-icon>
+      </ng-template>
+      <mat-step
+        #filterStep
+        [stepControl]="filterFormGroup"
+        (interacted)="stepInteracted($event)"
+      >
+        <ng-template matStepLabel>{{ 'filters' | translate }}</ng-template>
+        <form [formGroup]="filterFormGroup">
+          <app-filter-step
+            [events]="eventSub.asObservable()"
+            [step]="filterStep"
+          ></app-filter-step>
+          <div
+            class="custom-button-container"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutGap="0.5rem"
+            fxLayoutGap.xs="1.0rem"
+          >
+            <button mat-raised-button color="primary" matStepperNext>
+              {{ 'next' | translate }}
+            </button>
+            <button mat-raised-button color="accent" (click)="stepper.reset()">
+              {{ 'start over' | translate }}
+            </button>
+          </div>
+        </form>
+        <mat-divider aria-hidden="true" [inset]="true"></mat-divider>
+      </mat-step>
+      <mat-step
+        #meetingStep
+        [stepControl]="meetingFormGroup"
+        [editable]="meetingStepEditable"
+        (interacted)="stepInteracted($event)"
+      >
+        <ng-template matStepLabel>{{ 'meeting' | translate }}</ng-template>
+        <form [formGroup]="meetingFormGroup">
+          <app-meeting-step
+            [events]="eventSub.asObservable()"
+            [step]="meetingStep"
+            (selected)="slotSelected()"
+          ></app-meeting-step>
+          <div
+            class="custom-button-container"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutGap="0.5rem"
+            fxLayoutGap.xs="1.0rem"
+          >
+            <button mat-raised-button color="accent" (click)="stepper.reset()">
+              {{ 'start over' | translate }}
+            </button>
+          </div>
+        </form>
+        <mat-divider aria-hidden="true" [inset]="true"></mat-divider>
+      </mat-step>
+      <mat-step
+        #contactStep
+        [stepControl]="contactFormGroup"
+        [editable]="contactStepEditable"
+        (interacted)="stepInteracted($event)"
+      >
+        <ng-template matStepLabel>{{ 'contact' | translate }}</ng-template>
+        <form [formGroup]="contactFormGroup">
+          <app-contact-step
+            [events]="eventSub.asObservable()"
+            [step]="contactStep"
+          ></app-contact-step>
+          <div
+            class="custom-button-container"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutGap="0.5rem"
+            fxLayoutGap.xs="1.0rem"
+          >
+            <button mat-raised-button color="primary" matStepperNext>
+              {{ 'next' | translate }}
+            </button>
+            <button mat-raised-button color="accent" (click)="stepper.reset()">
+              {{ 'start over' | translate }}
+            </button>
+          </div>
+        </form>
+        <mat-divider aria-hidden="true" [inset]="true"></mat-divider>
+      </mat-step>
+      <mat-step
+        #participantStep
+        *ngIf="showParticipants"
+        [stepControl]="participantFormGroup"
+        [editable]="participantStepEditable"
+        (interacted)="stepInteracted($event)"
+      >
+        <ng-template matStepLabel>{{ 'participants' | translate }}</ng-template>
+        <form [formGroup]="participantFormGroup">
+          <app-participant-step
+            [events]="eventSub.asObservable()"
+            [step]="participantStep"
+          ></app-participant-step>
+          <div
+            class="custom-button-container"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutGap="0.5rem"
+            fxLayoutGap.xs="1.0rem"
+          >
+            <button mat-raised-button color="accent" matStepperPrevious>
+              {{ 'previous' | translate }}
+            </button>
+            <button mat-raised-button color="primary" matStepperNext>
+              {{ 'next' | translate }}
+            </button>
+          </div>
+        </form>
+        <mat-divider aria-hidden="true" [inset]="true"></mat-divider>
+      </mat-step>
+      <mat-step
+        #confirmStep
+        [stepControl]="confirmFormGroup"
+        [editable]="confirmStepEditable"
+        (interacted)="stepInteracted($event)"
+      >
+        <ng-template matStepLabel>{{ 'confirmation' | translate }}</ng-template>
+        <form [formGroup]="confirmFormGroup">
+          <app-confirm-step
+            [events]="eventSub.asObservable()"
+            [step]="confirmStep"
+          ></app-confirm-step>
+          <div
+            class="custom-button-container"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutGap="0.5rem"
+            fxLayoutGap.xs="1.0rem"
+          >
+            <button mat-raised-button color="accent" matStepperPrevious>
+              {{ 'previous' | translate }}
+            </button>
+            <button mat-raised-button color="primary" matStepperNext>
+              {{ 'confirm' | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step
+        #summaryStep
+        [stepControl]="summaryFormGroup"
+        (interacted)="stepInteracted($event)"
+      >
+        <ng-template matStepLabel>{{ 'ready' | translate }}</ng-template>
+        <form [formGroup]="summaryFormGroup">
+          <app-summary-step
+            [events]="eventSub.asObservable()"
+            [step]="summaryStep"
+          ></app-summary-step>
+          <div
+            class="custom-button-container"
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayoutGap="0.5rem"
+            fxLayoutGap.xs="1.0rem"
+          >
+            <button mat-raised-button color="accent" (click)="stepper.reset()">
+              {{ 'start over' | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+  </section>
+  <section
+    *ngIf="showRecaptchaInfo"
+    class="recaptcha-section"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <p class="recaptcha-section-text">
+      This site is protected by reCAPTCHA and the Google<br />
+      <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+      <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+    </p>
+  </section>
+</mat-card>

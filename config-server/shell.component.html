@@ -1,0 +1,159 @@
+<mat-sidenav-container [ngClass]="{ 'limited-min-size': !isCustomer }">
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="!isMobile"
+    [disableClose]="!isMobile"
+    ngClass.gt-sm="has-border"
+  >
+    <nav class="side-menu" ngClass.lt-md="mobile">
+      <mat-toolbar class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon
+          class="logo"
+          svgIcon="{{ logo }}"
+          (click)="goHome(sidenav)"
+        ></mat-icon>
+      </mat-toolbar>
+      <div
+        #shellFocusMonitorComponent
+        class="side-menu-content fixed"
+        ngClass.lt-md="mobile"
+      >
+        <mat-card class="side-menu-card">
+          <mat-action-list>
+            <div *ngFor="let group of groups; last as isLast; index as gi">
+              <button
+                class="list-button"
+                #listbuttonitem
+                id="{{ route.path }}"
+                [disabled]="route.disabled || !validRole || !authorized"
+                [ngClass]="{
+                  'custom-selected': route.path === fixedActiveRoutePath
+                }"
+                *ngFor="let route of content | groupFilter: group; index as ri"
+                mat-list-item
+                (click)="routeClicked(route, sidenav)"
+              >
+                <mat-label class="full-width">
+                  {{ route.path | translate | uppercase }}
+                </mat-label>
+              </button>
+              <div *ngIf="!isLast">
+                <div class="spacer-vertical-half"></div>
+                <mat-divider [inset]="true"></mat-divider>
+                <div class="spacer-vertical-half"></div>
+              </div>
+            </div>
+          </mat-action-list>
+        </mat-card>
+        <mat-card *ngIf="showUserData" class="user-info side-menu-card">
+          <mat-card-content fxLayout="column">
+            <div class="content-frame">
+              <div class="mat-subheading-1">
+                {{ 'user information' | translate | uppercase }}
+              </div>
+              <mat-card-subtitle>{{ userName }}</mat-card-subtitle>
+              <!-- <mat-card-subtitle>{{ userInfo.email }}</mat-card-subtitle> -->
+              <mat-card-subtitle>{{ roleString }}</mat-card-subtitle>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="timezones && timezones.length" class="side-menu-card">
+          <mat-form-field>
+            <mat-label>{{ 'time zone' | translate }}</mat-label>
+            <mat-select
+              id="shell-timezone-selection"
+              [formControl]="shellTimezoneControl"
+              (selectionChange)="timeZoneChanged($event.value)"
+            >
+              <mat-option *ngFor="let zone of timezones" [value]="zone">
+                {{ zone }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card>
+      </div>
+    </nav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar">
+      <button
+        class="menu-button"
+        aria-label="Button"
+        mat-icon-button
+        (click)="sidenav.toggle()"
+        fxHide.gt-sm
+      >
+        <mat-icon svgIcon="menu"></mat-icon>
+      </button>
+      <span>{{ title | titlecase2 }}</span>
+      <div fxFlex></div>
+      <mat-spinner
+        *ngIf="httpRequestIsActive"
+        [strokeWidth]="2"
+        [diameter]="20"
+        class="header-spinner"
+      ></mat-spinner>
+      <div
+        class="mat-caption custom-header-text truncate"
+        matTooltip="{{ 'user information' | translate }}"
+        [matTooltipShowDelay]="tooltip.showDelay"
+        [matTooltipHideDelay]="tooltip.hideDelay"
+      >
+        {{ userName }}
+      </div>
+      <div
+        *ngIf="hasUserName"
+        class="custom-vertical-divider custom-header-text"
+      ></div>
+      <div
+        fxHide.lt-sm="true"
+        class="mat-caption custom-header-text truncate"
+        matTooltip="{{ 'time zone' | translate }}"
+        [matTooltipShowDelay]="tooltip.showDelay"
+        [matTooltipHideDelay]="tooltip.hideDelay"
+      >
+        {{ timezone }}
+      </div>
+      <div *ngIf="(languages?.length || 0) > 1">
+        <button
+          mat-icon-button
+          id="shell-language-menu"
+          [matMenuTriggerFor]="languageMenu"
+          matTooltip="{{ 'select language' | translate }}"
+          [matTooltipShowDelay]="tooltip.showDelay"
+          [matTooltipHideDelay]="tooltip.hideDelay"
+          aria-label="Button"
+        >
+          <mat-icon svgIcon="language"></mat-icon>
+        </button>
+        <mat-menu #languageMenu="matMenu">
+          <button
+            mat-menu-item
+            aria-label="Language"
+            *ngFor="let language of languages | langSorter: language"
+            (click)="setLanguage(language)"
+          >
+            {{ language | langFormatter }}
+          </button>
+        </mat-menu>
+      </div>
+      <span *ngIf="(languages?.length || 0) > 1" class="language">{{
+        language | langFormatter
+      }}</span>
+      <button
+        *ngIf="showLogout"
+        alt=""
+        mat-icon-button
+        matTooltip="{{ 'log out' | translate }}"
+        [matTooltipShowDelay]="tooltip.showDelay"
+        [matTooltipHideDelay]="tooltip.hideDelay"
+        aria-label="Button"
+        (click)="logOut()"
+      >
+        <mat-icon svgIcon="exit_to_app"></mat-icon>
+      </button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

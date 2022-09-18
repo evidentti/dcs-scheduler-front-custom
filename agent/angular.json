@@ -1,0 +1,261 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "dcs-scheduler-front": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "baseHref": "/agent/",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/apple-touch-icon.png",
+              "src/robots.txt",
+              "src/manifest.json",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/@brand/@custom/assets",
+                "output": "/assets/brand/"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src/@brand/@custom/",
+                "output": "/"
+              }
+            ],
+            "allowedCommonJsDependencies": [
+              "recaptcha-v3",
+              "moment-timezone",
+              "moment",
+              "finnish-ssn",
+              "finnish-business-ids",
+              "file-saver",
+              "chart.js",
+              "rxjs",
+              "awesome-phonenumber",
+              "locale-codes",
+              "uuid",
+              "webpack/hot/emitter"
+            ],
+            "styles": [
+              "src/main.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/@brand/@custom/theme"
+              ]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "serviceWorker": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/@brand/@custom/environments/environment.prod.agent.ts"
+                },
+                {
+                  "replace": "src/app/app-routing.module.ts",
+                  "with": "src/@brand/@custom/agent/agent-routing.module.ts"
+                },
+                {
+                  "replace": "src/app/app-config.module.ts",
+                  "with": "src/@brand/@custom/agent/agent-config.module.ts"
+                },
+                {
+                  "replace": "src/translations/fi-FI.json",
+                  "with": "src/@brand/@custom/translations/fi-FI.json"
+                },
+                {
+                  "replace": "src/translations/en-US.json",
+                  "with": "src/@brand/@custom/translations/en-US.json"
+                },
+                {
+                  "replace": "src/translations/sv-SE.json",
+                  "with": "src/@brand/@custom/translations/sv-SE.json"
+                },
+                {
+                  "replace": "src/app/@service-api/service-api.ts",
+                  "with": "src/app/@service-api/agent-api.ts"
+                },
+                {
+                  "replace": "src/app/@service-api/services/extra.service.ts",
+                  "with": "src/@brand/@custom/src/services/agent.extra.service.ts"
+                }
+              ]
+            },
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/@brand/@custom/environments/environment.dev.agent.ts"
+                },
+                {
+                  "replace": "src/app/app-routing.module.ts",
+                  "with": "src/@brand/@custom/agent/agent-routing.module.ts"
+                },
+                {
+                  "replace": "src/app/app-config.module.ts",
+                  "with": "src/@brand/@custom/agent/agent-config.module.ts"
+                },
+                {
+                  "replace": "src/translations/fi-FI.json",
+                  "with": "src/@brand/@custom/translations/fi-FI.json"
+                },
+                {
+                  "replace": "src/translations/en-US.json",
+                  "with": "src/@brand/@custom/translations/en-US.json"
+                },
+                {
+                  "replace": "src/translations/sv-SE.json",
+                  "with": "src/@brand/@custom/translations/sv-SE.json"
+                },
+                {
+                  "replace": "src/app/@service-api/service-api.ts",
+                  "with": "src/app/@service-api/agent-api.ts"
+                },
+                {
+                  "replace": "src/app/@service-api/services/extra.service.ts",
+                  "with": "src/@brand/@custom/src/services/agent.extra.service.ts"
+                }
+              ]
+            },
+            "ci": {
+              "progress": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "dcs-scheduler-front:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "dcs-scheduler-front:build:production"
+            },
+            "dev": {
+              "browserTarget": "dcs-scheduler-front:build:dev"
+            },
+            "ci": {
+              "progress": false
+            }
+          },
+          "defaultConfiguration": "dev"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "dcs-scheduler-front:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "scripts": [],
+            "styles": [
+              "src/main.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/@brand/@custom/theme"
+              ]
+            },
+            "assets": [
+              "src/favicon.ico",
+              "src/apple-touch-icon.png",
+              "src/robots.txt",
+              "src/manifest.json",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/@brand/@custom/assets",
+                "output": "/assets/brand/"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src/@brand/@custom/",
+                "output": "/"
+              }
+            ]
+          },
+          "configurations": {
+            "ci": {
+              "progress": false,
+              "watch": false
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "dcs-scheduler-front-e2e": {
+      "root": "e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "dcs-scheduler-front:serve"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "dcs-scheduler-front"
+}

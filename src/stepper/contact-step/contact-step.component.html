@@ -1,0 +1,190 @@
+<div #focusMonitorComponent class="custom-step">
+  <div class="custom-step-info mat-body-1">
+    Sed mattis, tellus id consequat commodo, elit diam bibendum lacus, ac
+    malesuada nulla tellus vel.
+  </div>
+  <div class="main-content" fxLayout="row" fxLayoutGap="1.5rem">
+    <section class="primary-section">
+      <mat-form-field
+        *ngIf="isInput('customerFirstName') | async"
+        appearance="outline"
+      >
+        <mat-label>
+          {{ 'first name' | translate }}
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          [required]="isRequired(firstNameCtrl)"
+          #firstNameInput
+          formControlName="contactStepFirstNameControl"
+          maxlength="45"
+        />
+        <mat-error *ngIf="!!firstNameCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="isInput('customerLastName') | async"
+        appearance="outline"
+      >
+        <mat-label>
+          {{ 'last name' | translate }}
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          [required]="isRequired(lastNameCtrl)"
+          #lastNameInput
+          formControlName="contactStepLastNameControl"
+          maxlength="45"
+        />
+        <mat-error *ngIf="!!lastNameCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="isInput('personalId') | async"
+        appearance="outline"
+      >
+        <mat-label>
+          {{ 'ssn' | translate }}
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          [required]="isRequired(personalIdCtrl)"
+          #ssnInput
+          formControlName="contactStepPersonalIdControl"
+          maxlength="11"
+        />
+        <mat-error *ngIf="!!personalIdCtrl?.hasError('invalid')">
+          {{ 'invalid ssn' | translate }}
+        </mat-error>
+        <mat-error *ngIf="personalIdCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <section
+        *ngIf="isInput('messageSelector') | async"
+        class="communication-section"
+      >
+        <div
+          class="communication-wrapper"
+          [ngClass]="{ error: smsSelectorCtrl?.hasError('invalid') }"
+        >
+          <div class="communication-text">
+            {{ 'select sms or email' | translate }}
+          </div>
+          <div
+            class="step-checkbox"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="1rem"
+          >
+            <mat-checkbox
+              formControlName="contactStepSmsSelectorControl"
+              [ngClass]="{ error: smsSelectorCtrl?.hasError('invalid') }"
+              (change)="smsSelectorChanged($event)"
+            >
+              {{ 'sms' | translate }}
+            </mat-checkbox>
+            <mat-checkbox
+              formControlName="contactStepEmailSelectorControl"
+              [ngClass]="{ error: smsSelectorCtrl?.hasError('invalid') }"
+              (change)="emailSelectorChanged($event)"
+            >
+              {{ 'email' | translate }}
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="communication-extra">
+          <mat-error
+            class="step-error"
+            [@stepErrorAnimation]
+            *ngIf="!!smsSelectorCtrl?.hasError('invalid')"
+          >
+            {{ 'required' | translate }}
+          </mat-error>
+        </div>
+      </section>
+      <mat-form-field
+        *ngIf="isInput('customerPhoneNumber') | async"
+        appearance="outline"
+      >
+        <mat-label>
+          {{ 'phone number' | translate }}
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          [required]="isRequired(phoneCtrl)"
+          #phoneNumberInput
+          formControlName="contactStepPhoneControl"
+          (input)="checkInput()"
+          (blur)="formatNumber()"
+          (keydown.space)="spaceKeydown($event)"
+          (paste)="paste()"
+        />
+        <mat-error *ngIf="!!phoneCtrl?.hasError('invalid')">
+          {{ 'invalid phone' | translate }}
+        </mat-error>
+        <mat-error *ngIf="!!phoneCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="isInput('customerEmail') | async"
+        appearance="outline"
+      >
+        <mat-label>
+          {{ 'email' | translate }}
+        </mat-label>
+        <input
+          type="emailInputType"
+          matInput
+          [required]="isRequired(emailCtrl)"
+          #emailInput
+          formControlName="contactStepEmailControl"
+          maxlength="150"
+        />
+        <mat-error *ngIf="!!emailCtrl?.hasError('email')">
+          {{ 'invalid email' | translate }}
+        </mat-error>
+        <mat-error *ngIf="emailCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="isInput('messageToAgent') | async"
+        appearance="outline"
+      >
+        <mat-label>
+          {{ 'message to the agent' | translate }}
+        </mat-label>
+        <textarea
+          matInput
+          [required]="isRequired(commentCtrl)"
+          #messageInput
+          cdkTextareaAutosize
+          formControlName="contactStepCommentControl"
+          maxlength="1000"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+        <mat-hint align="end">
+          {{ contact.comments ? contact.comments.length : 0 }} / 1000
+        </mat-hint>
+        <mat-error *ngIf="!!commentCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </section>
+    <section class="secondary-section">
+      <div class="secondary-content"></div>
+    </section>
+  </div>
+  <div class="loading-animation" *ngIf="showLoadingAnimation">
+    <mat-spinner [diameter]="40" [strokeWidth]="4"></mat-spinner>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+@import "colors";
+
+.mat-card {
+  padding: 0;
+}
+
+.custom-stepper {
+  max-width: 960px;
+  margin: auto;
+  height: auto;
+  &.stepper-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+  }
+  &.stepper-text {
+    padding: 0 1.5rem 2rem 1.5rem;
+  }
+  &.container {
+    padding: 0 1.5rem;
+  }
+}
+
+.mat-raised-button {
+  width: 100%;
+  max-width: 200px;
+}
+
+.custom-button-container {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.recaptcha-section {
+  padding: 1rem;
+}
+
+.recaptcha-section-text {
+  text-align: center;
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 960px) {
+}
+
+@media only screen and (max-width: 600px) {
+  .mat-raised-button {
+    max-width: 400px;
+  }
+  .custom-button-container {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .custom-stepper {
+    &.stepper-header {
+      text-align: center;
+    }
+  }
+}

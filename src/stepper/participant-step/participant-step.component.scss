@@ -1,0 +1,61 @@
+@import "colors";
+
+.custom-step {
+  padding-top: 0.5rem;
+}
+
+.custom-step-info {
+  margin-bottom: 1rem;
+}
+
+.primary-section {
+  width: 100%;
+  min-width: 680px;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+
+.secondary-section {
+  width: 100%;
+  padding: 1rem 0 1rem 0;
+}
+
+.add-button-wrapper {
+  padding-right: 1.5rem;
+  max-width: 680px;
+}
+
+.participant-counter {
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 960px) {
+}
+
+@media only screen and (max-width: 768px) {
+  .primary-section {
+    width: auto;
+    min-width: auto;
+  }
+
+  .secondary-section {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .primary-section {
+    width: auto;
+    min-width: auto;
+  }
+
+  .secondary-section {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .add-button-wrapper {
+    padding-right: 0;
+  }
+}

@@ -1,0 +1,217 @@
+<div #focusMonitorComponent class="custom-step">
+  <div class="custom-step-info mat-body-1">
+    Sed sodales ornare augue eu egestas. Nam finibus sem ligula, a mattis enim
+    rutrum faucibus.
+  </div>
+  <div class="main-content" fxLayout="row" fxLayoutGap="1.5rem">
+    <section class="primary-section">
+      <mat-form-field
+        *ngIf="showFilter('company')"
+        attr.aria-label="{{ 'company selection' | translate }}"
+        appearance="outline"
+      >
+        <mat-label aria-hidden="true">{{ 'company' | translate }}</mat-label>
+        <mat-select
+          #companySelection
+          formControlName="filterStepCompanyControl"
+          id="filter-step-company-selection"
+          [required]="isRequired(companyCtrl)"
+          (selectionChange)="companyChanged($event)"
+        >
+          <mat-option *ngIf="!companyFilter?.length" [value]="null">
+            <i>- {{ 'empty' | translate }} -</i>
+          </mat-option>
+          <mat-option *ngIf="!!companyCtrl?.value" [value]="null">
+            <i>- {{ 'clear' | translate }} -</i>
+          </mat-option>
+          <mat-option
+            *ngFor="let company of companyFilter | pairSorter"
+            [value]="company.id"
+          >
+            {{ company.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!companyCtrl?.hasError('required')">
+          <span class="cdk-visually-hidden"
+            >{{ 'company is missing' | translate }}.</span
+          ><span>{{ 'required' | translate }}</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="showFilter('topic')"
+        attr.aria-label="{{ 'topic selection' | translate }}"
+        appearance="outline"
+      >
+        <mat-label aria-hidden="true">{{ 'topic' | translate }}</mat-label>
+        <mat-select
+          #topicSelection
+          formControlName="filterStepTopicControl"
+          id="filter-step-topic-selection"
+          [required]="isRequired(topicCtrl)"
+          (selectionChange)="topicChanged($event)"
+        >
+          <mat-option *ngIf="!topicFilter?.length" [value]="null">
+            <i>- {{ 'empty' | translate }} -</i>
+          </mat-option>
+          <mat-option *ngIf="!!topicCtrl?.value" [value]="null">
+            <i>- {{ 'clear' | translate }} -</i>
+          </mat-option>
+          <mat-option
+            *ngFor="let topic of topicFilter | pairSorter"
+            [value]="topic.id"
+          >
+            {{ topic.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!topicCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="showFilter('channel')"
+        attr.aria-label="{{ 'channel selection' | translate }}"
+        appearance="outline"
+      >
+        <mat-label aria-hidden="true">{{ 'channel' | translate }}</mat-label>
+        <mat-select
+          #channelSelection
+          formControlName="filterStepChannelControl"
+          id="filter-step-channel-selection"
+          [required]="isRequired(channelCtrl)"
+          (selectionChange)="channelChanged($event)"
+        >
+          <mat-option *ngIf="!channelFilter?.length" [value]="null">
+            <i>- {{ 'empty' | translate }} -</i>
+          </mat-option>
+          <mat-option *ngIf="!!channelCtrl?.value" [value]="null">
+            <i>- {{ 'clear' | translate }} -</i>
+          </mat-option>
+          <mat-option
+            *ngFor="let channel of channelFilter | pairSorter"
+            [value]="channel.id"
+          >
+            {{ channel.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!channelCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="showFilter('office')"
+        attr.aria-label="{{ 'office selection' | translate }}"
+        appearance="outline"
+      >
+        <mat-label aria-hidden="true">{{ 'office' | translate }}</mat-label>
+        <mat-select
+          #officeSelection
+          formControlName="filterStepOfficeControl"
+          id="filter-step-office-selection"
+          [required]="isRequired(officeCtrl)"
+          (selectionChange)="officeChanged($event)"
+        >
+          <mat-option *ngIf="!officeFilter?.length" [value]="null">
+            <i>- {{ 'empty' | translate }} -</i>
+          </mat-option>
+          <mat-option *ngIf="!!officeCtrl?.value" [value]="null">
+            <i>- {{ 'clear' | translate }} -</i>
+          </mat-option>
+          <mat-option
+            *ngFor="let office of officeFilter | pairSorter"
+            [value]="office.id"
+          >
+            {{ office.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!officeCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="showFilter('agent')"
+        attr.aria-label="{{ 'agent selection' | translate }}"
+        appearance="outline"
+      >
+        <mat-label aria-hidden="true">{{ 'agent' | translate }}</mat-label>
+        <mat-select
+          #agentSelection
+          formControlName="filterStepAgentControl"
+          id="filter-step-agent-selection"
+          [required]="isRequired(agentCtrl)"
+          (selectionChange)="agentChanged($event)"
+        >
+          <mat-option *ngIf="!agentFilter?.length" [value]="null">
+            <i>- {{ 'empty' | translate }} -</i>
+          </mat-option>
+          <mat-option *ngIf="!!agentCtrl?.value" [value]="null">
+            <i>- {{ 'clear' | translate }} -</i>
+          </mat-option>
+          <mat-option
+            *ngFor="let agent of agentFilter | pairSorter"
+            [value]="agent.id"
+          >
+            {{ agent.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!agentCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="showFilter('language')"
+        attr.aria-label="{{ 'language selection' | translate }}"
+        appearance="outline"
+      >
+        <mat-label aria-hidden="true">{{ 'language' | translate }}</mat-label>
+        <mat-select
+          #languageSelection
+          formControlName="filterStepLanguageControl"
+          id="filter-step-language-selection"
+          [required]="isRequired(languageCtrl)"
+          (selectionChange)="languageChanged($event)"
+        >
+          <mat-option *ngIf="!languageFilter?.length" [value]="null">
+            <i>- {{ 'empty' | translate }} -</i>
+          </mat-option>
+          <mat-option *ngIf="!!languageCtrl?.value" [value]="null">
+            <i>- {{ 'clear' | translate }} -</i>
+          </mat-option>
+          <mat-option
+            *ngFor="let language of languageFilter | pairSorter"
+            [value]="language.id"
+          >
+            {{ language.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!languageCtrl?.hasError('required')">
+          {{ 'required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        *ngIf="showFilter('tags')"
+        attr.aria-label="{{ 'tags selection' | translate }}"
+        appearance="outline"
+      >
+        <mat-label aria-hidden="true">{{ 'tags' | translate }}</mat-label>
+        <mat-select
+          #tagSelection
+          formControlName="filterStepTagControl"
+          id="filter-step-tag-selection"
+          multiple
+          (openedChange)="openedChanged($event)"
+          (selectionChange)="tagChanged($event)"
+        >
+          <mat-option *ngFor="let tag of tagFilter | pairSorter" [value]="tag">
+            {{ tag.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="secondary-section">
+      <div class="secondary-content"></div>
+    </section>
+  </div>
+  <div class="loading-animation" *ngIf="showLoadingAnimation">
+    <mat-spinner [diameter]="40" [strokeWidth]="4"></mat-spinner>
+  </div>
+</div>
